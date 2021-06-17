@@ -21,9 +21,13 @@ jobs:
         run: |
           git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
       - name: Run transformation
+        uses: jitterbit/get-changed-files@v1
         run: |
-          python ./generateTeiGraphml.py
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+            python ./generateTeiGraphml.py
+          done
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
-        with:
+        with: 
           commit_message: Auto-Generation TEI
