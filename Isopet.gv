@@ -72,10 +72,10 @@ digraph {
     chi -> K;
     chi -> C;
     C -> Obis[dir=none, style="dashed"];
-    chi -> omicron;
+    chi -> omicron; 
     omicron -> R [dir=none, style="dashed"];
 
-    omicron -> Obis;
+    omicron -> Obis; 
     omicron -> F;
 
     gammasecond -> sigma;
