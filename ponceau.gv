@@ -9,7 +9,7 @@ digraph {
 
     alpha->alpha1;
     alpha ->alpha2;
-
+ 
     alpha1->LR19;
 
     alpha2->empty1;
