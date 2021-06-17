@@ -14,7 +14,7 @@ digraph {
 
     alpha2->empty1;
     empty1->BN747;
-    empty1->NH;
+    empty1->NH; 
 
     alpha2->beta;
     beta->Darm;
