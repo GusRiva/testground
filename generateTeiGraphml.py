@@ -4,7 +4,10 @@ import sys
 import re 
 from lxml import etree as et 
 
-changed_file = str(sys.argv[1])
+if len(sys.argv) > 1:
+    changed_file = str(sys.argv[1])
+else:
+    changed_file = "/home/gustavo/Dokumente/OpenStemmata/test/Isopet.gv"
 
 # with codecs.open(changed_file, 'r', 'utf-8') as infile:
 #     newContent = infile.read()
@@ -14,13 +17,6 @@ changed_file = str(sys.argv[1])
 #     with codecs.open('./' + changed_file + '.txt', 'w', 'utf-8') as outfile:
 #         outfile.write(newContent)
 
-# G = nx.Graph()
-
-# G.add_nodes_from([2, 3])
-
-# # Modify the file extension
-# nx.write_graphml(G,'./' + changed_file + '.graphml',
-#                  encoding="utf-8")
 
 
 
@@ -50,7 +46,19 @@ with codecs.open(changed_file, 'r', 'utf-8') as dotfile:
             attributes = re.findall('(\w+)="(\w*)",?\s?', line)
             for attr in attributes:
                 nodes[node][attr[0]] = attr[1]
-            
+
+G = nx.Graph()
+
+G.add_nodes_from(nodes)
+G.add_edges_from(edges)
+
+
+# Modify the file extension
+nx.write_graphml(G, changed_file[0:-3] + '.graphml',
+                 encoding="utf-8")
+
+
+
 graphEl = et.Element('graph')
 graph = et.ElementTree(graphEl)
 graphEl.attrib['type'] = 'directed'
@@ -68,8 +76,8 @@ for node in nodes:
         else:
             nodeEl.attrib['type'] = 'witness'
             
-
-
+tree = et.ElementTree(graphEl)
+tree.write( changed_file[0:-3] + '.tei.xml', pretty_print=True, encoding="UTF-8", xml_declaration=True)
 
 
 
