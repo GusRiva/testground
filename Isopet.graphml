@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><graph edgedefault="undirected"><node id="omega"/>
+<node id="O"/>
+<node id="X"/>
+<node id="y"/>
+<node id="alpha"/>
+<node id="alphaprime"/>
+<node id="alphasecond"/>
+<node id="beta"/>
+<node id="betaprime"/>
+<node id="betasecond"/>
+<node id="gamma"/>
+<node id="gammaprime"/>
+<node id="gammasecond"/>
+<node id="nu"/>
+<node id="iota"/>
+<node id="tau"/>
+<node id="pi"/>
+<node id="upsilon"/>
+<node id="chi"/>
+<node id="omicron"/>
+<node id="sigma"/>
+<node id="rho"/>
+<node id="Z"/>
+<node id="Obis"/>
+<node id="Y"/>
+<node id="M"/>
+<node id="A"/>
+<node id="D"/>
+<node id="E"/>
+<node id="B"/>
+<node id="N"/>
+<node id="I"/>
+<node id="G"/>
+<node id="T"/>
+<node id="Q"/>
+<node id="H"/>
+<node id="P"/>
+<node id="W"/>
+<node id="K"/>
+<node id="C"/>
+<node id="R"/>
+<node id="F"/>
+<node id="S"/>
+<node id="V"/>
+<edge source="omega" target="O"/>
+<edge source="O" target="X"/>
+<edge source="O" target="y"/>
+<edge source="X" target="alpha"/>
+<edge source="y" target="beta"/>
+<edge source="y" target="gamma"/>
+<edge source="alpha" target="Y"/>
+<edge source="alpha" target="alphaprime"/>
+<edge source="alphaprime" target="M"/>
+<edge source="alphaprime" target="alphasecond"/>
+<edge source="alphasecond" target="A"/>
+<edge source="alphasecond" target="D"/>
+<edge source="beta" target="betaprime"/>
+<edge source="beta" target="betasecond"/>
+<edge source="betaprime" target="E"/>
+<edge source="betaprime" target="B"/>
+<edge source="betasecond" target="nu"/>
+<edge source="betasecond" target="Z"/>
+<edge source="betasecond" target="tau"/>
+<edge source="gamma" target="gammaprime"/>
+<edge source="gamma" target="gammasecond"/>
+<edge source="gammaprime" target="H"/>
+<edge source="gammaprime" target="pi"/>
+<edge source="gammasecond" target="sigma"/>
+<edge source="nu" target="N"/>
+<edge source="nu" target="iota"/>
+<edge source="iota" target="I"/>
+<edge source="iota" target="G"/>
+<edge source="tau" target="omicron"/>
+<edge source="tau" target="T"/>
+<edge source="tau" target="Q"/>
+<edge source="pi" target="P"/>
+<edge source="pi" target="upsilon"/>
+<edge source="upsilon" target="W"/>
+<edge source="upsilon" target="chi"/>
+<edge source="chi" target="K"/>
+<edge source="chi" target="C"/>
+<edge source="chi" target="omicron"/>
+<edge source="omicron" target="R"/>
+<edge source="omicron" target="Obis"/>
+<edge source="omicron" target="F"/>
+<edge source="sigma" target="S"/>
+<edge source="sigma" target="rho"/>
+<edge source="rho" target="R"/>
+<edge source="rho" target="V"/>
+<edge source="Obis" target="C"/>
+<edge source="Y" target="T"/>
+<edge source="G" target="T"/>
+<edge source="S" target="V"/>
+</graph></graphml>
