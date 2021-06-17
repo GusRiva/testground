@@ -22,8 +22,10 @@ jobs:
       - name: Run transformation
         run: |
           for changed_file in ${{ steps.files.outputs.added_modified }}; do
-            echo "Do something with this ${changed_file}."
-            python ./generateTeiGraphml.py ${changed_file}
+            if ["${changed_file: -4}" == ".gv"] ; 
+              then echo "Converting ${changed_file}."
+                python ./generateTeiGraphml.py ${changed_file} ; 
+            fi
           done
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
