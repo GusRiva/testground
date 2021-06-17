@@ -13,8 +13,7 @@ G = nx.Graph()
 
 G.add_nodes_from([2, 3])
 
-nx.write_graphml(G,
-                 './new_stemma.graphml',
+nx.write_graphml(G,'./new_stemma.graphml',
                  encoding="utf-8")
 
         
