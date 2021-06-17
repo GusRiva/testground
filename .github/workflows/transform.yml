@@ -21,7 +21,8 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - name: Run transformation
         run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
+          for changed_file in ${{ steps.files.outputs.added_modified }}; do
+            echo "::warning file=${changed_file},line=1,col=5::Missing semicolon"  
             echo "Do something with this ${changed_file}."
             python ./generateTeiGraphml.py ${changed_file}
           done
