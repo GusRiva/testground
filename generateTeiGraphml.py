@@ -31,8 +31,9 @@ with codecs.open(changed_file, 'r', 'utf-8') as dotfile:
             if '[' in noAttrib:
                 attributes = re.findall('(\w+)="(\w*)",?\s?', line)    
                 for attr in attributes:
-                    if attr[0] == 'style' and attr[1] == 'dashed':
-                        edge_attr['type'] = 'contamination'
+                    if attr[0] == 'style':
+                        if attr[1] == 'dashed':
+                            edge_attr['type'] = 'contamination'
             edges.append((origin,dest, edge_attr))
             
         elif '[' in noAttrib:
@@ -44,19 +45,24 @@ with codecs.open(changed_file, 'r', 'utf-8') as dotfile:
 
 nodes = [ (x,nodes[x]) for x in nodes ]
 
-G = nx.Graph()
+G = nx.DiGraph()
 # print(edges)
 G.add_nodes_from(nodes)
 G.add_edges_from(edges)
 
 nx.write_graphml(G, changed_file[0:-3] + '.graphml', encoding="utf-8")
 
+ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'od': 'http://openstemmata.github.io/odd.html' }
+et.register_namespace('tei', 'http://www.tei-c.org/ns/1.0')
+et.register_namespace('od', 'http://openstemmata.github.io/odd.html')
+
 graph = et.Element('graph')
 tree = et.ElementTree(graph)
 graph.attrib['type'] = 'directed'
+graph.attrib['order'] = str(len(G.nodes))
+graph.attrib['size'] = str(len(G.edges))
 
 for node in G.nodes(data=True):
-    # print(node)
     nodeEl = et.SubElement(graph, 'node', attrib={'{http://www.w3.org/XML/1998/namespace}id': "n_" + node[0]})
     labelEl = et.SubElement(nodeEl, 'label')
     if 'label' in node[1]:
@@ -75,9 +81,22 @@ for node in G.nodes(data=True):
             nodeEl.attrib['type'] = 'witness'
     else:
         nodeEl.attrib['type'] = 'witness'
+    in_degree = G.in_degree(node[0])
+    out_degree = G.out_degree(node[0])
+    nodeEl.attrib['inDegree'] = str(in_degree)
+    nodeEl.attrib['outDegree'] = str(out_degree)
+    
+
             
 for edge in G.edges(data=True):
-    et.SubElement(graph, 'arc', attrib= {'from': "#n_" + edge[0], 'to': "#n_" + edge[1]})
+    print(edge)
+    edgeEl = et.SubElement(graph, 'arc', attrib= {'from': "#n_" + edge[0], 
+        'to': "#n_" + edge[1],})
+    if 'type' in edge[2]:
+        edgeEl.attrib["type"] = edge[2]['type']
+    else:
+        edgeEl.attrib['type'] = 'filitation'
+
 
 
 tree.write( changed_file[0:-3] + '.tei.xml', pretty_print=True, encoding="UTF-8", xml_declaration=True)
