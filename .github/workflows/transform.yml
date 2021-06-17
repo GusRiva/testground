@@ -17,11 +17,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install networkx
-      - name: Find changed files
-        run: |
-          git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
-      - name: Run transformation
+      - name: Get changed files module
         uses: jitterbit/get-changed-files@v1
+      - name: Run transformation
         run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
