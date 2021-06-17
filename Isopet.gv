@@ -18,7 +18,7 @@ digraph {
     nu[color="grey", label="ν"]
     iota[color="grey", label="ι"]
     tau[color="grey", label="τ"]
-    pi[color="grey", label="π"]
+    pi[color="grey", label="π"]  
     upsilon[color="grey", label="υ"]
     chi[color="grey", label="χ"]
     omicron[color="grey", label="ο"]
