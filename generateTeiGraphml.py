@@ -1,6 +1,6 @@
 import codecs 
 
-with codecs.open('../../stemma.gv', 'r', 'utf-8') as infile:
+with codecs.open('./stemma.gv', 'r', 'utf-8') as infile:
     newContent = infile.read()
 
     newContent += "Resultado"
