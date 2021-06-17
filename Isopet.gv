@@ -3,7 +3,7 @@
 digraph {
     # Greek letters/hypothetical links
     omega[color="grey", label="Ω"]
-    O[color="grey"]
+    O[color="grey", label=""]
     X[color="grey"]
     y[color="grey"]
     alpha[color="grey", label="α"]
@@ -39,7 +39,7 @@ digraph {
     alpha -> alphaprime;
     alphaprime -> M;
     alphaprime -> alphasecond;
-    alphasecond -> A;
+    alphasecond -> A [style="dashed"];
     alphasecond -> D;
 
     y -> beta;

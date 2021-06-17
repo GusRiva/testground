@@ -27,13 +27,17 @@ with codecs.open(changed_file, 'r', 'utf-8') as dotfile:
                 nodes[origin] = {}
             if dest not in nodes:
                 nodes[dest] = {}
-            edge_attr = {}
+            edge_attr = {'type': 'filiation', 'cert': 'unknown'}
             if '[' in noAttrib:
                 attributes = re.findall('(\w+)="(\w*)",?\s?', line)    
                 for attr in attributes:
                     if attr[0] == 'style':
                         if attr[1] == 'dashed':
                             edge_attr['type'] = 'contamination'
+                    elif attr[0] == 'color':
+                        if attr[1] == 'red':
+                            edge_attr['cert'] = 'low'
+
             edges.append((origin,dest, edge_attr))
             
         elif '[' in noAttrib:
@@ -52,12 +56,15 @@ G.add_edges_from(edges)
 
 nx.write_graphml(G, changed_file[0:-3] + '.graphml', encoding="utf-8")
 
+
+tree = et.parse('/home/gustavo/Dokumente/OpenStemmata/test/template.tei.xml')
+root = tree.getroot()
+
 ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'od': 'http://openstemmata.github.io/odd.html' }
 et.register_namespace('tei', 'http://www.tei-c.org/ns/1.0')
 et.register_namespace('od', 'http://openstemmata.github.io/odd.html')
 
-graph = et.Element('graph')
-tree = et.ElementTree(graph)
+graph = root.find('.//tei:graph', ns)
 graph.attrib['type'] = 'directed'
 graph.attrib['order'] = str(len(G.nodes))
 graph.attrib['size'] = str(len(G.edges))
@@ -89,19 +96,22 @@ for node in G.nodes(data=True):
 
             
 for edge in G.edges(data=True):
-    print(edge)
     edgeEl = et.SubElement(graph, 'arc', attrib= {'from': "#n_" + edge[0], 
         'to': "#n_" + edge[1],})
+    
     if 'type' in edge[2]:
-        edgeEl.attrib["type"] = edge[2]['type']
+        edgeEl.attrib["{http://openstemmata.github.io/odd.html}type"] = edge[2]['type']
     else:
-        edgeEl.attrib['type'] = 'filitation'
+        edgeEl.attrib['{http://openstemmata.github.io/odd.html}type'] = 'filiation'
+    
+    if 'cert' in edge[2]:
+        edgeEl.attrib["cert"] = edge[2]['cert']
+    
+
 
 
 
 tree.write( changed_file[0:-3] + '.tei.xml', pretty_print=True, encoding="UTF-8", xml_declaration=True)
 
 
-
-
-        
+       
