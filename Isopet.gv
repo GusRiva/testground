@@ -70,7 +70,7 @@ digraph {
     upsilon ->W;
     upsilon -> chi;
     chi -> K;
-    chi -> C;
+    chi -> C; 
     C -> Obis[dir=none, style="dashed"];
     chi -> omicron; 
     omicron -> R [dir=none, style="dashed"];
