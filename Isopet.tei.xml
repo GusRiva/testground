@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<graph type="directed">
+  <node xml:id="omega" type="hypothetical">
+    <label>Ω</label>
+  </node>
+  <node xml:id="O" type="hypothetical">
+    <label/>
+  </node>
+  <node xml:id="X" type="hypothetical">
+    <label/>
+  </node>
+  <node xml:id="y" type="hypothetical">
+    <label/>
+  </node>
+  <node xml:id="alpha" type="hypothetical">
+    <label>α</label>
+  </node>
+  <node xml:id="alphaprime" type="hypothetical">
+    <label>α¹</label>
+  </node>
+  <node xml:id="alphasecond" type="hypothetical">
+    <label>α²</label>
+  </node>
+  <node xml:id="beta" type="hypothetical">
+    <label>β</label>
+  </node>
+  <node xml:id="betaprime" type="hypothetical">
+    <label>β¹</label>
+  </node>
+  <node xml:id="betasecond" type="hypothetical">
+    <label>β²</label>
+  </node>
+  <node xml:id="gamma" type="hypothetical">
+    <label>γ</label>
+  </node>
+  <node xml:id="gammaprime" type="hypothetical">
+    <label>γ¹</label>
+  </node>
+  <node xml:id="gammasecond" type="hypothetical">
+    <label/>
+  </node>
+  <node xml:id="nu" type="hypothetical">
+    <label>ν</label>
+  </node>
+  <node xml:id="iota" type="hypothetical">
+    <label>ι</label>
+  </node>
+  <node xml:id="tau" type="hypothetical">
+    <label>τ</label>
+  </node>
+  <node xml:id="pi" type="hypothetical">
+    <label>π</label>
+  </node>
+  <node xml:id="upsilon" type="hypothetical">
+    <label>υ</label>
+  </node>
+  <node xml:id="chi" type="hypothetical">
+    <label>χ</label>
+  </node>
+  <node xml:id="omicron" type="hypothetical">
+    <label>ο</label>
+  </node>
+  <node xml:id="sigma" type="hypothetical">
+    <label>σ</label>
+  </node>
+  <node xml:id="rho" type="hypothetical">
+    <label>ϱ</label>
+  </node>
+  <node xml:id="Z">
+    <label/>
+  </node>
+  <node xml:id="Obis">
+    <label>O</label>
+  </node>
+  <node xml:id="Y">
+    <label/>
+  </node>
+  <node xml:id="M">
+    <label/>
+  </node>
+  <node xml:id="A">
+    <label/>
+  </node>
+  <node xml:id="D">
+    <label/>
+  </node>
+  <node xml:id="E">
+    <label/>
+  </node>
+  <node xml:id="B">
+    <label/>
+  </node>
+  <node xml:id="N">
+    <label/>
+  </node>
+  <node xml:id="I">
+    <label/>
+  </node>
+  <node xml:id="G">
+    <label/>
+  </node>
+  <node xml:id="T">
+    <label/>
+  </node>
+  <node xml:id="Q">
+    <label/>
+  </node>
+  <node xml:id="H">
+    <label/>
+  </node>
+  <node xml:id="P">
+    <label/>
+  </node>
+  <node xml:id="W">
+    <label/>
+  </node>
+  <node xml:id="K">
+    <label/>
+  </node>
+  <node xml:id="C">
+    <label/>
+  </node>
+  <node xml:id="R">
+    <label/>
+  </node>
+  <node xml:id="F">
+    <label/>
+  </node>
+  <node xml:id="S">
+    <label/>
+  </node>
+  <node xml:id="V">
+    <label/>
+  </node>
+</graph>
