@@ -14,7 +14,7 @@ digraph {
     jprime[color="grey", label="J₁*"]
     jsec[color="grey", label="J₂*"]
     jthird[color="grey", label="J₃*"]
-    Cstar[color="grey", label="C*"]
+    Cstar[color="grey", label="C*"] 
     CprimeStar[color="grey", label="C₁*"] 
     CsecStar[color="grey", label="C₂*"]
     Ra[color="grey", label="Ra*"]
