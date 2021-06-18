@@ -8,7 +8,7 @@ digraph {
     Db[color="grey", label="Db*"]
     DNb[color="grey", label="DNb*"]
     Nb[color="grey", label="Nb*"]
-    LgM[color="grey", label="LgM*"]
+    LgM[color="grey", label="LgM*"] 
     dstar[color="grey", label="d*"]
     zprime[color="grey", label="z₁*"]
     jprime[color="grey", label="J₁*"]
