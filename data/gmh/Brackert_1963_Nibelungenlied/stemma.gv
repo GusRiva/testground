@@ -20,7 +20,7 @@ digraph {
     Ra[color="grey", label="Ra*"]
 
     original -> archetype
-    archetype -> y
+    archetype -> y 
     archetype -> z
     y -> ADb
     y -> B
