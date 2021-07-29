@@ -223,35 +223,45 @@ if len(sys.argv) > 1:
                 el.text = cont
             elif re.match('^[\s]+- witSigla', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                wit = et.SubElement(listWit, 'witness', attrib= {'{http://www.w3.org/XML/1998/namespace}id': cont})
-                el = et.SubElement(wit, 'label', attrib= {'type': 'siglum'})
-                el.text = cont 
+                if cont != '':
+                    wit = et.SubElement(listWit, 'witness', attrib= {'{http://www.w3.org/XML/1998/namespace}id': cont})
+                    el = et.SubElement(wit, 'label', attrib= {'type': 'siglum'})
+                    el.text = cont 
             elif re.match('^[\s]+witSignature', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                el = et.SubElement(wit, 'idno')
-                el.text = cont
+                if cont != '':
+                    el = et.SubElement(wit, 'idno')
+                    el.text = cont
             elif re.match('^[\s]+witOrigDate', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                el = et.SubElement(wit, 'origDate')
-                el.text = cont
+                if cont != '':
+                    el = et.SubElement(wit, 'origDate')
+                    el.text = cont
             elif re.match('^[\s]+witOrigPlace', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                el = et.SubElement(wit, 'origPlace')
-                el.text = cont
+                if cont != '':
+                    el = et.SubElement(wit, 'origPlace')
+                    el.text = cont
             elif re.match('^[\s]+witNotes', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                el = et.SubElement(wit, 'note')
-                el.text = cont
+                if cont != '':
+                    el = et.SubElement(wit, 'note')
+                    el.text = cont
             elif re.match('^[\s]+witMsDesc', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                et.SubElement(wit, 'ptr', attrib={'type': 'description', 'target': cont})
+                if cont != '':
+                    et.SubElement(wit, 'ptr', attrib={'type': 'description', 'target': cont})
             elif re.match('^[\s]+witDigit', line):
                 cont = re.findall('"([^"]*)"', line)[0]
-                et.SubElement(wit, 'ptr', attrib={'type': 'digitised', 'target': cont})
+                if cont != '':
+                    et.SubElement(wit, 'ptr', attrib={'type': 'digitised', 'target': cont})
+        
         graphic = root.find('./tei:facsimile/tei:graphic', ns)
         graphic.attrib['url'] = facsimileLink + new_file_name + '/stemma.png?raw=true'
 
-
+    if len(list(listWit)) == 0:
+        print("Zero")
+        listWit.getparent().remove(listWit)
 
 
     # GRAPH
