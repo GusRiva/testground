@@ -103,6 +103,7 @@ if len(sys.argv) > 1:
         keywords = root.find('./tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords', ns)
         listWit = root.find('./tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:listWit', ns)
         respStmt = root.find('./tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:respStmt', ns)
+        graph = root.find('.//tei:graph', ns)
 
         #This is useful for the url of the graphic element
         facsimileLink = "https://github.com/OpenStemmata/database/blob/main/data/"
@@ -146,7 +147,7 @@ if len(sys.argv) > 1:
                 cont = re.findall('"([^"]*)"', line)[0]
                 el = bibl.find('./tei:author', ns)
                 el.text = cont
-                el2 = titleStmt.find('./author')
+                el2 = titleStmt.find('./tei:author', ns)
                 el2.text = cont
             elif re.match('^[\s]*publicationPage', line):
                 cont = re.findall('"([^"]*)"', line)[0]
@@ -252,7 +253,7 @@ if len(sys.argv) > 1:
 
 
     # GRAPH
-    graph = root.find('.//tei:graph', ns)
+    
     graph.attrib['type'] = 'directed'
     graph.attrib['order'] = str(len(G.nodes))
     graph.attrib['size'] = str(len(G.edges))
