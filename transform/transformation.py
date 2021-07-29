@@ -143,6 +143,8 @@ if len(sys.argv) > 1:
                 el.attrib['n'] = cont
             elif re.match('^[\s]*publicationStemmaNum', line):
                 cont = re.findall('"([^"]*)"', line)[0]
+                graphLabel = et.SubElement(graph, 'label')
+                graphLabel.text = cont
             elif re.match('^[\s]*publicationAuthors', line):
                 cont = re.findall('"([^"]*)"', line)[0]
                 el = bibl.find('./tei:author', ns)
