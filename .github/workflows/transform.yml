@@ -25,7 +25,7 @@ jobs:
       - name: Convert files
         run: |
           mastersha=$(git log -n 1 master --pretty=format:"%H")
-          files=$(git diff --name-only ${{ github.sha }} ${mastersha})
+          files=$(git diff --name-only ${{ github.sha }} $mastersha)
           for changed_file in $files; do
             if [ "${changed_file: -9}" == "stemma.gv" ] || [ "${changed_file: -12}" == "metadata.txt" ] ; 
               then echo "Converting ${changed_file}."
