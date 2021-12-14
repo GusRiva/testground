@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
@@ -22,10 +21,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install networkx lxml
+      - name: Set env
+        run: echo "mastersha=$(git log -n 1 master --pretty=format:"%H")" >> $GITHUB_ENV
       - name: Convert files
         run: |
-          mastersha=$(git log -n 1 master --pretty=format:"%H")
-          files=$(git diff --name-only ${{ github.sha }} $mastersha)
+          files=$(git diff --name-only ${{ github.sha }} ${{env.mastersha}})
           for changed_file in $files; do
             if [ "${changed_file: -9}" == "stemma.gv" ] || [ "${changed_file: -12}" == "metadata.txt" ] ; 
               then echo "Converting ${changed_file}."
