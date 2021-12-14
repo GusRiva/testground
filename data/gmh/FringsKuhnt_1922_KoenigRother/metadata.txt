@@ -1,6 +1,6 @@
 publicationType : "book"
 publicationTitle : "König Rother"
-publicationDate : "1922"
+publicationDate : "1955"
 publicationPlace : "Bonn/Leipzig"
 publicationSeries : "Rheinische Beiträge und Hülfsbücher zur germanischen Philologie und Volkskunde"
 publicationNum: "3"
