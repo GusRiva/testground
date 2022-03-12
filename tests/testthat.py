@@ -134,7 +134,6 @@ if validation_error == 0:
 print("Checking DOT files are valid")
 for file in glob.iglob('./data/*/*/*.gv', recursive=True):
     try:
-        print(file)
         pydot.graph_from_dot_file(file)
     except:
         print('Error')

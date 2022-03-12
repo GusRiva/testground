@@ -2,7 +2,7 @@ digraph {
     original[label="ω", color="grey"]
     archetype[label="x", color="grey"]
     G[label="Ga,Gb,Gc"]
-    alpha[label="α", color="grey"]
+    alpha[label="α", color=grey"]
 
 
     original -> archetype

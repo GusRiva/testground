@@ -8,7 +8,7 @@ digraph {
     1 -> C;
     1 -> E;
     epitome -> Eustathius_ms;
-
+    d
     omega [color="grey", label="ω"];
     epitome [color="grey", label="Epitome"];
     Eustathius_ms [color="grey", label="Eustathius’s MS"]; # Eustathius’s manuscript source
