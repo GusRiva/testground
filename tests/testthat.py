@@ -71,9 +71,67 @@ for folder in folders:
             raise RuntimeError('')
     except:
         print(f"{bcolors.FAIL}Error caused by directory <"+folder+f">.{bcolors.ENDC}")
+        print(f"{bcolors.WARNING}The subfolders should be named according to the structure: FirstEditorLastName_Date_TitleWord{bcolors.ENDC}")  
         continue
 if folder_name_error == 0:
     print(f"{bcolors.OKGREEN}Subfolder are well constructed{bcolors.ENDC}")    
+
+# SUBMISSIONS COMPLETE
+print("Checking all submissions are complete")
+completeness_error = 0
+minimal_structure = ["stemma.gv", "metadata.txt"]
+maximal_structure = minimal_structure + ['stemma.graphml', 'stemma.png']
+folders = glob.glob('data/*/*')
+for folder in folders:
+    try:
+        folder_base = os.path.basename(folder)
+        maximal_structure += [folder_base + '.tei.xml']
+        actual_structure = []
+        for file in glob.glob(folder+'/*'):
+            file_base = os.path.basename(file)
+            actual_structure.append(file_base)
+        if set(minimal_structure).issubset(actual_structure) == False:
+            completeness_error = 1
+            exit_code = 1
+            raise RuntimeError('')
+        if set(actual_structure).issubset(maximal_structure) == False:
+            error_file = set(actual_structure) - set(maximal_structure)
+            completeness_error = 2
+            exit_code = 1
+            raise RuntimeError('')
+    except:
+        print(f"{bcolors.FAIL}Error caused by <"+folder+f">.{bcolors.ENDC}")
+        if completeness_error == 1:
+            print(f"{bcolors.WARNING}Missing stemma.gv or metadata.txt{bcolors.ENDC}")
+        elif completeness_error == 2:
+            print(f"{bcolors.WARNING}The name of the file(s) <"+' '.join(error_file)+f"> is not allowed{bcolors.ENDC}")
+        continue
+if completeness_error == 0:
+    print(f"{bcolors.OKGREEN}All submissions are complete{bcolors.ENDC}")   
+# test_that("All submissions are complete", {
+#   folders = Sys.glob("../../data/*/*")
+#   correct_structure_without_image = sort(c("stemma.graphml", "stemma.gv", "metadata.txt"))
+#   for(i in 1:length(folders)){
+#     file_name = c(stringr::str_split(folders[i], '/'))
+#     file_name_2 = paste(file_name[[1]][length(file_name[[1]])], '.tei.xml', sep = '')
+#     correct_structure_min = sort(
+#       append(correct_structure_without_image, file_name_2 , 
+#              after = length(correct_structure_without_image)))
+#     correct_structure_max = sort(c(correct_structure_min, "stemma.png"))
+#     expect_true(identical(sort(list.files(folders[i])),
+#                           correct_structure_max)
+#                 ||
+#                 identical(sort(list.files(folders[i])),
+#                 correct_structure_min),
+#                 info = paste("Error in folder",
+#                                   folders[i], 
+#                                   "Submission is missing at least:", 
+#                                   paste(correct_structure_min[!correct_structure_min %in% list.files(folders[i])], collapse = " "), 
+#                                   collapse = " ")
+#     ) 
+#   }
+# })
+
 
 # for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
 #     print("Checking", file)
