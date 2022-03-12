@@ -113,14 +113,19 @@ if completeness_error == 0:
 # TEI FILES
 xmlschema_doc = et.parse('schema/openStemmata.xsd')
 xmlschema = et.XMLSchema(xmlschema_doc)
+validation_error = 0
 for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
     try:
         tree = et.parse(file)
         xmlschema.assertValid(tree)
     except Exception as e:
         exit_code = 1
+        validation_error = 1
         print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
         print(e)
         continue
+if validation_error == 0:
+    print(f"{bcolors.OKGREEN}All TEI files are valid{bcolors.ENDC}")  
+
 
 sys.exit(exit_code)
