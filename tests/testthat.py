@@ -3,6 +3,7 @@ import glob
 import unittest
 import sys
 import csv
+import codecs 
 
 exit_code = 0
 error_place = ''
@@ -23,30 +24,41 @@ print('Testing folder structure...')
 valid_folder_structure =  [".git", ".gitignore", ".github", "data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
             "schema", "tests", "transform"]
 actual_folder_structure = os.listdir('.')
-try:
-    for el in actual_folder_structure:
-        # unittest.assertIn(el, valid_folder_structure, f"{bcolors.WARNING}Unexprected file "+el+"{bcolors.ENDC}")
+folder_error = 0
+for el in actual_folder_structure:
+    try:
         if el not in valid_folder_structure:
             exit_code = 1
+            folder_error = 1
             error_place = el
             raise RuntimeError('')
-except:
-    print(f"{bcolors.FAIL}Error caused by directory '"+error_place+"'.{bcolors.ENDC}")
-    print(f"{bcolors.FAIL}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
-else:
+    except:
+        print(f"{bcolors.FAIL}Error caused by directory <"+error_place+f">.{bcolors.ENDC}")
+        print(f"{bcolors.WARNING}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
+        continue
+if folder_error == 0:
     print(f"{bcolors.OKGREEN}Folder Structure Correct{bcolors.ENDC}")
 
 # ISO language codes
 print("Checking if data has correct subfolders named by ISO 639 language codes")
-try:
-    with open('./tests/testthat/iso-639-3_20200515.tab') as isos:
-        language_codes = csv.reader("isos", delimiter = "\t")
-        for folder in os.listdir('data'):
-            print(folder)
-except:
-    print(f"{bcolors.FAIL}Error caused by directory '"+error_place+"'.{bcolors.ENDC}")
-else:
-    print(f"{bcolors.OKGREEN}Folder Structure Correct{bcolors.ENDC}")
+iso_error = 0
+with codecs.open('./tests/testthat/iso-639-3_20200515.tab', 'r', 'utf-8') as isos:
+    language_codes = list(csv.reader(isos, delimiter = "\t"))
+    language_codes = [x[0] for x in language_codes]
+    for folder in os.listdir('data'):
+        for part in folder.split('+'):
+            try:
+                if part not in language_codes:
+                    exit_code = 1
+                    iso_error = 1
+                    error_place = folder
+                    raise RuntimeError('')                
+            except:
+                print(f"{bcolors.FAIL}Error caused by directory <"+error_place+f">.{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}folder names should be ISO 639 language codes (with optional + symbol for language hybrids{bcolors.ENDC}")  
+                continue
+if iso_error == 0:
+    print(f"{bcolors.OKGREEN}Folders follow the ISO language codes{bcolors.ENDC}")
 
 # test_that("data has correct subfolders named by ISO 639 language codes", {
 #   language_codes = read.csv("iso-639-3_20200515.tab", sep = "\t")
