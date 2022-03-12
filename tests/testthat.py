@@ -4,6 +4,7 @@ import sys
 import re 
 import csv
 import codecs 
+from lxml import etree as et 
 
 exit_code = 0
 
@@ -108,33 +109,18 @@ for folder in folders:
         continue
 if completeness_error == 0:
     print(f"{bcolors.OKGREEN}All submissions are complete{bcolors.ENDC}")   
-# test_that("All submissions are complete", {
-#   folders = Sys.glob("../../data/*/*")
-#   correct_structure_without_image = sort(c("stemma.graphml", "stemma.gv", "metadata.txt"))
-#   for(i in 1:length(folders)){
-#     file_name = c(stringr::str_split(folders[i], '/'))
-#     file_name_2 = paste(file_name[[1]][length(file_name[[1]])], '.tei.xml', sep = '')
-#     correct_structure_min = sort(
-#       append(correct_structure_without_image, file_name_2 , 
-#              after = length(correct_structure_without_image)))
-#     correct_structure_max = sort(c(correct_structure_min, "stemma.png"))
-#     expect_true(identical(sort(list.files(folders[i])),
-#                           correct_structure_max)
-#                 ||
-#                 identical(sort(list.files(folders[i])),
-#                 correct_structure_min),
-#                 info = paste("Error in folder",
-#                                   folders[i], 
-#                                   "Submission is missing at least:", 
-#                                   paste(correct_structure_min[!correct_structure_min %in% list.files(folders[i])], collapse = " "), 
-#                                   collapse = " ")
-#     ) 
-#   }
-# })
 
-
-# for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
-#     print("Checking", file)
-
+# TEI FILES
+xmlschema_doc = et.parse('schema/openStemmata.xsd')
+xmlschema = et.XMLSchema(xmlschema_doc)
+for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
+    try:
+        tree = et.parse(file)
+        xmlschema.assertValid(tree)
+    except Exception as e:
+        exit_code = 1
+        print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
+        print(e)
+        continue
 
 sys.exit(exit_code)
