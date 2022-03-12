@@ -14,10 +14,12 @@ class bcolors:
 
 try:
     print('Testing folder structure...')
-    # valid_folder_structure = set("data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
-    #             "schema", "tests", "transform")
+    valid_folder_structure =  [".gitignore", ".github", "data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
+                "schema", "tests", "transform"]
     actual_folder_structure = os.listdir('.')
-    print(actual_folder_structure)
+    for el in actual_folder_structure:
+        if el not in valid_folder_structure:
+            raise RuntimeError(f"{bcolors.WARNING}Incorrect element: "+el+"{bcolors.ENDC}")
 except:
     print('Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE')
 else:

@@ -18,26 +18,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install networkx lxml
-    - name: Convert files
-      run: |
-        for file in ./data/*/*/* ; do
-          if [ "${file: -9}" == "stemma.gv" ] || [ "${file: -12}" == "metadata.txt" ] ; 
-            then echo "Converting ${file}."
-            python ./transform/transformation.py ${file} ; 
-          fi
-        done
+    # - name: Convert files
+    #   run: |
+    #     for file in ./data/*/*/* ; do
+    #       if [ "${file: -9}" == "stemma.gv" ] || [ "${file: -12}" == "metadata.txt" ] ; 
+    #         then echo "Converting ${file}."
+    #         python ./transform/transformation.py ${file} ; 
+    #       fi
+    #     done
     - name: Tests
       run:  python ./tests/testthat.py 
-    # - uses: r-lib/actions/setup-r@v1
-    #   id: install-r  
-    # - name: Install dependencies
-    #   run: install.packages(c("testthat", "stringr", "xml2")) #"sna" , "igraph", "DiagrammeR"))
-    #   shell: Rscript {0}
-    # - run: Rscript tests/testthat.R
-    
-    #- uses: actions/checkout@master
-    #- name: Test
-    #  uses: skx/github-action-tester@master
-
+   
 
 
