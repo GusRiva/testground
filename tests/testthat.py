@@ -4,6 +4,7 @@ import unittest
 import sys
 
 exit_code = 0
+error_place = ''
 
 class bcolors:
     HEADER = '\033[95m'
@@ -26,9 +27,11 @@ try:
         # unittest.assertIn(el, valid_folder_structure, f"{bcolors.WARNING}Unexprected file "+el+"{bcolors.ENDC}")
         if el not in valid_folder_structure:
             exit_code = 1
+            error_place = el
             raise RuntimeError('')
 except:
-    print(f"{bcolors.WARNING}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}Error caused by directory "+error_place+".{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
 else:
     print(f"{bcolors.OKGREEN}Folder Structure Correct{bcolors.ENDC}")
 
