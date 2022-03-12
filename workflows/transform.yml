@@ -1,0 +1,35 @@
+name: Transform
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+        with: 
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install networkx lxml
+      - name: Convert files
+        run: |
+          files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{github.event.pull_request.head.sha}})
+          for changed_file in $files; do
+            if [ "${changed_file: -9}" == "stemma.gv" ] || [ "${changed_file: -12}" == "metadata.txt" ] ; 
+              then echo "Converting ${changed_file}."
+              python ./transform/transformation.py ${changed_file} ; 
+            fi
+          done
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with: 
+          commit_message: Auto-Generation TEI
+          push_options: --force
