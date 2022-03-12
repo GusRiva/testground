@@ -26,8 +26,8 @@ jobs:
             python ./transform/transformation.py ${file} ; 
           fi
         done
-      - name: Tests
-        run:  python ./tests/testthat.py 
+    - name: Tests
+      run:  python ./tests/testthat.py 
     # - uses: r-lib/actions/setup-r@v1
     #   id: install-r  
     # - name: Install dependencies
