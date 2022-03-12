@@ -19,4 +19,6 @@ digraph {
     gamma [color="grey", label="γ"];
     delta [color="grey", label="δ"];
 
-}
+}  
+
+

@@ -6,7 +6,7 @@ import csv
 import codecs 
 from lxml import etree as et 
 import networkx as nx
-import pydot 
+# import pydot 
 
 exit_code = 0
 
@@ -126,18 +126,43 @@ for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
         validation_error = 1
         print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
         print(e)
+        print('\n')
         continue
 if validation_error == 0:
     print(f"{bcolors.OKGREEN}All TEI files are valid{bcolors.ENDC}")  
+    print('\n')
 
 # DOT FILES
 print("Checking DOT files are valid")
-for file in glob.iglob('./data/*/*/*.gv', recursive=True):
+for file in glob.iglob('./data/*/*aeus/*.gv', recursive=True):
     try:
-        pydot.graph_from_dot_file(file)
+        with codecs.open(file, 'r', 'utf-8') as dot:
+            lines = '\n'.join([re.sub('#.+', '', x) for x in dot.readlines()])
+            lines = re.sub('^\s+', '', lines)
+            lines = re.sub('\s*$', '', lines)
+            lines = re.sub(r'[^\S\r\n]+', ' ', lines)
+            if lines[:9] != 'digraph {':
+                raise RuntimeError('Graph should start with "digraph {"')
+            if lines[-1:] != '}':
+                raise RuntimeError('Graph should end with "}"')
+            for line in lines.split('\n'):
+                if line.isspace():
+                    continue
+                elif re.match('digraph\s*{', line):
+                    continue
+                elif re.match('\s*[\w\d]+\s+-[->]\s+[\w\d]+', line):
+                    # parse attributes in square brackets
+                    # print(line)
+                    continue
+                elif re.match('\s*[\w\d]+', line):
+                    # parse attributes
+                    print(line)
+                    continue
+                
     except Exception as e:
+        print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
         print(e)
-        print('Error')
+        print('\n')
         exit_code = 1
 
 sys.exit(exit_code)
