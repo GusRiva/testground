@@ -20,7 +20,7 @@ class bcolors:
 # try:
 print('Testing folder structure...')
 valid_folder_structure =  [".git", ".gitignore", ".github", "data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
-            "schema", "tests"]
+            "schema", "tests", "transform"]
 actual_folder_structure = os.listdir('.')
 try:
     for el in actual_folder_structure:
@@ -30,7 +30,7 @@ try:
             error_place = el
             raise RuntimeError('')
 except:
-    print(f"{bcolors.FAIL}Error caused by directory "+error_place+".{bcolors.ENDC}")
+    print(f"{bcolors.FAIL}Error caused by directory '"+error_place+"'.{bcolors.ENDC}")
     print(f"{bcolors.FAIL}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
 else:
     print(f"{bcolors.OKGREEN}Folder Structure Correct{bcolors.ENDC}")
