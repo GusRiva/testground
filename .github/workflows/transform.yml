@@ -32,6 +32,7 @@ jobs:
       - name: Convert files
         run: |
           for file in ./* ; do
+            echo "checking ${file}"
             if [ "${file: -9}" == "stemma.gv" ] || [ "${file: -12}" == "metadata.txt" ] ; 
               then echo "Converting ${file}."
               python ./transform/transformation.py ${file} ; 
