@@ -5,6 +5,8 @@ import re
 import csv
 import codecs 
 from lxml import etree as et 
+import networkx as nx
+import pydot 
 
 exit_code = 0
 
@@ -111,6 +113,7 @@ if completeness_error == 0:
     print(f"{bcolors.OKGREEN}All submissions are complete{bcolors.ENDC}")   
 
 # TEI FILES
+print("Checking TEI files are valid")
 xmlschema_doc = et.parse('schema/openStemmata.xsd')
 xmlschema = et.XMLSchema(xmlschema_doc)
 validation_error = 0
@@ -127,5 +130,13 @@ for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
 if validation_error == 0:
     print(f"{bcolors.OKGREEN}All TEI files are valid{bcolors.ENDC}")  
 
+# DOT FILES
+print("Checking DOT files are valid")
+for file in glob.iglob('./data/*/*/*.gv', recursive=True):
+    try:
+        print(file)
+        pydot.graph_from_dot_file(file)
+    except:
+        print('Error')
 
 sys.exit(exit_code)
