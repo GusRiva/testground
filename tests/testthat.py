@@ -19,7 +19,7 @@ class bcolors:
 # try:
 print('Testing folder structure...')
 valid_folder_structure =  [".git", ".gitignore", ".github", "data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
-            "schema", "tests", "transform"]
+            "schema", "tests"]
 actual_folder_structure = os.listdir('.')
 try:
     for el in actual_folder_structure:
