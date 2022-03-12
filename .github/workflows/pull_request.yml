@@ -7,9 +7,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: checkout repo content
-        with: 
-          ref: ${{ github.ref }}
-          fetch-depth: 0
+      with: 
+        ref: ${{ github.ref }}
+        fetch-depth: 0
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
