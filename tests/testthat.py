@@ -3,10 +3,11 @@ import glob
 import sys
 import re 
 import csv
-import codecs 
+import codecs
+from attr import attr 
 from lxml import etree as et 
 import networkx as nx
-# import pydot 
+
 
 exit_code = 0
 
@@ -23,7 +24,7 @@ class bcolors:
 
 #FOLDER STRUCTURE
 print(f"{bcolors.HEADER}Testing folder structure...{bcolors.ENDC}")
-print('Check root folders and files...')
+print('\nCheck root folders and files...')
 valid_folder_structure =  [".git", ".gitignore", ".github", "data", "CITATION.cff", "examples", "example_graph.png", "LICENSE", "README.md",
             "schema", "tests", "transform"]
 actual_folder_structure = os.listdir('.')
@@ -31,7 +32,7 @@ folder_error = 0
 for el in actual_folder_structure:
     try:
         if el not in valid_folder_structure:
-            exit_code = 1
+            exit_code += 1
             folder_error = 1
             raise RuntimeError('')
     except:
@@ -39,10 +40,10 @@ for el in actual_folder_structure:
         print(f"{bcolors.WARNING}Root folder structure should not be modified (submissions go in database/LANG/EDITOR_TITLE_DATE{bcolors.ENDC}")
         continue
 if folder_error == 0:
-    print(f"{bcolors.OKGREEN}Folder Structure Correct{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}Folder Structure Correct{bcolors.ENDC}")
 
 # ISO language codes
-print("Checking if data has correct subfolders named by ISO 639 language codes")
+print("\nChecking if data has correct subfolders named by ISO 639 language codes")
 iso_error = 0
 with codecs.open('./tests/testthat/iso-639-3_20200515.tab', 'r', 'utf-8') as isos:
     language_codes = list(csv.reader(isos, delimiter = "\t"))
@@ -51,7 +52,7 @@ with codecs.open('./tests/testthat/iso-639-3_20200515.tab', 'r', 'utf-8') as iso
         for part in folder.split('+'):
             try:
                 if part not in language_codes:
-                    exit_code = 1
+                    exit_code += 1
                     iso_error = 1
                     raise RuntimeError('')                
             except:
@@ -59,10 +60,10 @@ with codecs.open('./tests/testthat/iso-639-3_20200515.tab', 'r', 'utf-8') as iso
                 print(f"{bcolors.WARNING}folder names should be ISO 639 language codes (with optional + symbol for language hybrids{bcolors.ENDC}")  
                 continue
 if iso_error == 0:
-    print(f"{bcolors.OKGREEN}Folders follow the ISO language codes{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}Folders follow the ISO language codes{bcolors.ENDC}")
 
 # FOLDER NAMING
-print("Checking that subsubfolders are named consistently (FirstEditorLastName_Date_TitleWord)")
+print("\nChecking that subsubfolders are named consistently (FirstEditorLastName_Date_TitleWord)")
 folders = [os.path.basename(x) for x in glob.iglob('data/*/*')]
 folder_name_error = 0
 for folder in folders:
@@ -70,17 +71,17 @@ for folder in folders:
         match= re.match('\w+_\d{1,4}[a-z]?_', folder)
         if match is None:
             folder_name_error = 1
-            exit_code = 1
+            exit_code += 1
             raise RuntimeError('')
     except:
         print(f"{bcolors.FAIL}Error caused by directory <"+folder+f">.{bcolors.ENDC}")
         print(f"{bcolors.WARNING}The subfolders should be named according to the structure: FirstEditorLastName_Date_TitleWord{bcolors.ENDC}")  
         continue
 if folder_name_error == 0:
-    print(f"{bcolors.OKGREEN}Subfolder are well constructed{bcolors.ENDC}")    
+    print(f"{bcolors.OKBLUE}Subfolder are well constructed{bcolors.ENDC}")    
 
 # SUBMISSIONS COMPLETE
-print("Checking all submissions are complete")
+print("\nChecking all submissions are complete")
 completeness_error = 0
 minimal_structure = ["stemma.gv", "metadata.txt"]
 maximal_structure = minimal_structure + ['stemma.graphml', 'stemma.png']
@@ -94,26 +95,21 @@ for folder in folders:
             file_base = os.path.basename(file)
             actual_structure.append(file_base)
         if set(minimal_structure).issubset(actual_structure) == False:
-            completeness_error = 1
-            exit_code = 1
-            raise RuntimeError('')
+            exit_code += 1
+            raise RuntimeError('Missing stemma.gv or metadata.txt')
         if set(actual_structure).issubset(maximal_structure) == False:
             error_file = set(actual_structure) - set(maximal_structure)
-            completeness_error = 2
-            exit_code = 1
-            raise RuntimeError('')
-    except:
+            exit_code += 1
+            raise RuntimeError("The name of the file(s) <"+' '.join(error_file)+f"> is not allowed")
+    except Exception as e:
         print(f"{bcolors.FAIL}Error caused by <"+folder+f">.{bcolors.ENDC}")
-        if completeness_error == 1:
-            print(f"{bcolors.WARNING}Missing stemma.gv or metadata.txt{bcolors.ENDC}")
-        elif completeness_error == 2:
-            print(f"{bcolors.WARNING}The name of the file(s) <"+' '.join(error_file)+f"> is not allowed{bcolors.ENDC}")
+        print(f"{bcolors.WARNING}"+str(e)+f"{bcolors.ENDC}")
         continue
 if completeness_error == 0:
-    print(f"{bcolors.OKGREEN}All submissions are complete{bcolors.ENDC}")   
+    print(f"{bcolors.OKBLUE}All submissions are complete{bcolors.ENDC}")   
 
 # TEI FILES
-print("Checking TEI files are valid")
+print("\nChecking TEI files are valid")
 xmlschema_doc = et.parse('schema/openStemmata.xsd')
 xmlschema = et.XMLSchema(xmlschema_doc)
 validation_error = 0
@@ -122,19 +118,26 @@ for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
         tree = et.parse(file)
         xmlschema.assertValid(tree)
     except Exception as e:
-        exit_code = 1
+        exit_code += 1
         validation_error = 1
         print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
         print(e)
-        print('\n')
         continue
 if validation_error == 0:
-    print(f"{bcolors.OKGREEN}All TEI files are valid{bcolors.ENDC}")  
-    print('\n')
+    print(f"{bcolors.OKBLUE}All TEI files are valid{bcolors.ENDC}")  
+    
 
 # DOT FILES
-print("Checking DOT files are valid")
-for file in glob.iglob('./data/*/*aeus/*.gv', recursive=True):
+valid_node_values = {'color': set(['"grey"', 'grey']), 
+                'label': set(['']),
+                }
+valid_edge_values = {'color': set(['"grey"', 'grey']), 
+                'dir': set(['none']),
+                'label': set(['']),
+                'style': set(['"dashed"', 'dashed']), 
+                }
+print("\nChecking DOT files are valid")
+for file in glob.iglob('./data/*/*/*.gv', recursive=True):
     try:
         with codecs.open(file, 'r', 'utf-8') as dot:
             lines = '\n'.join([re.sub('#.+', '', x) for x in dot.readlines()])
@@ -150,19 +153,124 @@ for file in glob.iglob('./data/*/*aeus/*.gv', recursive=True):
                     continue
                 elif re.match('digraph\s*{', line):
                     continue
-                elif re.match('\s*[\w\d]+\s+-[->]\s+[\w\d]+', line):
-                    # parse attributes in square brackets
-                    # print(line)
+                elif re.match('\s*[\w\d]+\s?-[->]\s?[\w\d]+', line):
+                    # EDGE
+                    attributes = re.findall('\[([^\]]+)', line)
+                    if len(attributes) > 0:
+                        try:
+                            # Check if square brackets close
+                            assert len(re.findall('\[[^\]]+\]', line)) > 0
+                        except:
+                            print(f"{bcolors.FAIL}Square brackets must close in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                        try:
+                            # Are there more than one parenthesis in one line?
+                            assert len(attributes) == 1
+                        except:
+                            exit_code += 1
+                            print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.FAIL}All attributes must be in one parenthesis "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                            continue
+                        try:
+                            # Are the attributes separated by , and key=value?
+                            assert len(re.search('\[?(?:\s?\w+=(?:\w+|"[^"]+"|"")\s?,?)+\]?\s?;?', attributes[0].strip()).group(0)) == len(attributes[0].strip())
+                        except:
+                            exit_code += 1
+                            print(attributes[0].strip())
+                            print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                            continue
+                        # attributes_list = re.findall( '\w+\s?=\s?"?[^"]+"?' , attributes[0])
+                        attributes_list = re.findall('\w+=(?:\w+|"[^"]*"?)' , attributes[0])
+                        for pair in attributes_list:
+                            try:
+                                key = pair.split('=', 1)[0]
+                                value = pair.split('=', 1)[1]
+                                try:
+                                    assert key in valid_edge_values.keys()
+                                except:
+                                    exit_code += 1
+                                    print(f"{bcolors.FAIL}Invalid attribute name '"+key+"' in "+file+f"{bcolors.ENDC}")
+                                    print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")      
+                                else:
+                                    try:
+                                        if key != 'label':
+                                            assert value in valid_edge_values[key]
+                                    except:
+                                        exit_code += 1
+                                        print(f"{bcolors.FAIL}Invalid attribute value "+value+" in "+file+f"{bcolors.ENDC}")
+                                        print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")      
+                            except:
+                                exit_code += 1
+                                print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                                print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                                continue
                     continue
                 elif re.match('\s*[\w\d]+', line):
-                    # parse attributes
-                    print(line)
+                    # NODE
+                    attributes = re.findall('\[.+', line)
+                    if len(attributes) > 0:
+                        try:
+                            # Check if square brackets close
+                            assert len(re.findall('\[[^\]]+\]', line)) > 0
+                        except:
+                            print(f"{bcolors.FAIL}Square brackets must close in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                        try:
+                            # Are there more than one parenthesis in one line?
+                            assert len(attributes) == 1
+                        except:
+                            exit_code += 1
+                            print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.FAIL}All attributes must be in one parenthesis "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                            continue
+                        try:
+                            # Are the attributes separated by , and key=value?
+                            assert len(re.search('\[?(?:\s?\w+=(?:\w+|"[^"]+"|"")\s?,?)+\]?\s?;?', attributes[0].strip()).group(0)) == len(attributes[0].strip())
+                        except:
+                            exit_code += 1
+                            print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                            print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                            continue
+                        attributes_list = re.findall('\w+=(?:\w+|"[^"]*"?)', attributes[0])
+                        for pair in attributes_list:
+                            try:
+                                key = pair.split('=', 1)[0]
+                                value = pair.split('=', 1)[1]
+                                try:
+                                    assert key in valid_node_values.keys()
+                                except:
+                                    exit_code += 1
+                                    print(f"{bcolors.FAIL}Invalid attribute name '"+key+"' in "+file+f"{bcolors.ENDC}")
+                                    print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")      
+                                else:
+                                    try:
+                                        if key == 'label':
+                                            # print((value,re.match('"[^"]*"', value)))
+                                            assert re.match('"[\w\W]*"', value)
+                                        else:
+                                            assert value in valid_node_values[key]
+                                    except:
+                                        exit_code += 1
+                                        print(f"{bcolors.FAIL}Invalid attribute value "+value+" in "+file+f"{bcolors.ENDC}")
+                                        print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")      
+                            except:
+                                exit_code += 1
+                                print(f"{bcolors.FAIL}Syntax error in "+file+f"{bcolors.ENDC}")
+                                print(f"{bcolors.WARNING}Line: "+line+f"{bcolors.ENDC}")
+                                continue
                     continue
                 
     except Exception as e:
-        print(f"{bcolors.FAIL}Error caused by "+file+f".{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}Error caused by "+file+f"{bcolors.ENDC}")
         print(e)
-        print('\n')
-        exit_code = 1
+        exit_code += 1
 
-sys.exit(exit_code)
+# if exit_code > 0:
+#     print(f"\n{bcolors.BOLD}{bcolors.FAIL}"+ str(exit_code) + f" total error(s) detected! Please correct before merging.{bcolors.ENDC}")
+#     sys.exit(1)
+# else:
+#     print(f"{bcolors.BOLD}{bcolors.OKGREEN}\nAll checks have passed, no errors detected!{bcolors.ENDC}")
+#     sys.exit(0)
