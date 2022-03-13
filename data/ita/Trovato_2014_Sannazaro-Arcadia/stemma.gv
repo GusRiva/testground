@@ -50,7 +50,7 @@ Zopp3->Pag2;
 Zopp3->Bind1;
 Bind1->Sess;
 Sess->Zio;
-Bind1->Bind2 [style=dahed, color="grey"];
+Bind1->Bind2 [style=dashed, color="grey"];
 Bind2->Bind3;
 Bind3->Bind4;
 Bind4->Imp;

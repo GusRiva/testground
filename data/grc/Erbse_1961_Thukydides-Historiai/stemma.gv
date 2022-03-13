@@ -1,5 +1,5 @@
 digraph {
-archetyp[label="Ω"][color="grey"]
+archetyp[label="Ω", color="grey"]
 hyparchetypa [label="a", color="grey"] 
 hyparchetypphi [label="Min.-Ex. (φ)", color="grey"] 
 hyparchetypzeta [label="ζ", color="grey"] 
