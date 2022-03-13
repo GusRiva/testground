@@ -19,9 +19,9 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2
         with: 
-        #  ref: ${{ github.ref }}
+          # ref: ${{ github.ref }}
           token: ${{ secrets.UPT }}
-        #  fetch-depth: 0
+          # fetch-depth: 0
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
