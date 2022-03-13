@@ -31,5 +31,5 @@ if exit_code > 0:
     print(f"\n{bcolors.BOLD}{bcolors.FAIL}"+ str(exit_code) + f" total error(s) detected! Please correct before merging.{bcolors.ENDC}")
     sys.exit(1)
 else:
-    print(f"{bcolors.BOLD}{bcolors.OKGREEN}\nAll checks have passed, no errors detected!{bcolors.ENDC}")
+    print(f"\n{bcolors.BOLD}{bcolors.OKGREEN}All checks have passed, no errors detected. Congrats, you can merge!{bcolors.ENDC}")
     sys.exit(0)
