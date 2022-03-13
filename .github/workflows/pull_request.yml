@@ -20,8 +20,8 @@ jobs:
         pip install networkx lxml 
     - name: Test Folder Structure
       run:  python ./tests/test_folder.py 
-    # - name: Test DOT
-    #   run:  python ./tests/test_dot.py 
+    - name: Test DOT
+      run:  python ./tests/test_dot.py 
     # - name: Convert files
     #   run: |
     #     for file in ./data/*/*/* ; do
