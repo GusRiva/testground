@@ -1,5 +1,5 @@
 digraph {
-archetyp[color="grey", label="Ω"] 
+archetyp[label="Ω"][color="grey"]
 hyparchetypa [label="a", color="grey"] 
 hyparchetypphi [label="Min.-Ex. (φ)", color="grey"] 
 hyparchetypzeta [label="ζ", color="grey"] 
@@ -35,4 +35,4 @@ groupb -> G [style="dashed"] ;
 collationcopy -> G [style="dashed"] ;
 collationcopy -> M [style="dashed"] ;
 collationcopy -> F [style="dashed"] ;
-
+}

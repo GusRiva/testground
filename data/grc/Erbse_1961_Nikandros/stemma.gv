@@ -7,7 +7,7 @@ groupr [color="grey", label="r"]
 archetyp -> pi 
 archetyp -> omega 
 omega -> M 
-omega -> hyparchetypalpha 
+omega -> hyparchetypalpha [color="grey"]
 hyparchetypalpha - G 
 hyparchetypalpha -> groupr 
 }
