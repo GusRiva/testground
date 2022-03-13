@@ -1,12 +1,6 @@
-import os 
 import glob 
 import sys
-import re 
-import csv
-import codecs
-from attr import attr 
 from lxml import etree as et 
-import networkx as nx
 
 from bcolors import bcolors
 
@@ -31,8 +25,6 @@ for file in glob.iglob('./data/*/*/*.tei.xml', recursive=True):
         continue
 if validation_error == 0:
     print(f"{bcolors.OKBLUE}All TEI files are valid{bcolors.ENDC}")  
-    
-
 
 
 if exit_code > 0:
