@@ -1,51 +1,51 @@
 <?xml version='1.0' encoding='utf-8'?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d3" for="edge" attr.name="cert" attr.type="string"/>
 <key id="d2" for="edge" attr.name="type" attr.type="string"/>
-<key id="d1" for="node" attr.name="label" attr.type="string"/>
-<key id="d0" for="node" attr.name="color" attr.type="string"/>
+<key id="d1" for="node" attr.name="color" attr.type="string"/>
+<key id="d0" for="node" attr.name="label" attr.type="string"/>
 <graph edgedefault="directed"><node id="archetyp">
-  <data key="d0">grey</data>
-  <data key="d1">Ω</data>
+  <data key="d0">Ω</data>
+  <data key="d1">grey</data>
 </node>
 <node id="hyparchetypa">
-  <data key="d1">a</data>
-  <data key="d0">grey</data>
+  <data key="d0">a</data>
+  <data key="d1">grey</data>
 </node>
 <node id="hyparchetypphi">
-  <data key="d1">Min.-Ex. (φ)</data>
-  <data key="d0">grey</data>
+  <data key="d0">Min.-Ex. (φ)</data>
+  <data key="d1">grey</data>
 </node>
 <node id="hyparchetypzeta">
-  <data key="d1">ζ</data>
-  <data key="d0">grey</data>
+  <data key="d0">ζ</data>
+  <data key="d1">grey</data>
 </node>
 <node id="hyparchetypomega">
-  <data key="d1">ω</data>
-  <data key="d0">grey</data>
+  <data key="d0">ω</data>
+  <data key="d1">grey</data>
 </node>
 <node id="groupb">
-  <data key="d1">b</data>
-  <data key="d0">grey</data>
+  <data key="d0">b</data>
+  <data key="d1">grey</data>
 </node>
 <node id="groupc">
-  <data key="d1">c</data>
-  <data key="d0">grey</data>
+  <data key="d0">c</data>
+  <data key="d1">grey</data>
 </node>
 <node id="collationcopy">
-  <data key="d1">Koll.-Ex.</data>
-  <data key="d0">grey</data>
+  <data key="d0">Koll.-Ex.</data>
+  <data key="d1">grey</data>
 </node>
 <node id="1">
-  <data key="d0">grey</data>
-  <data key="d1"> </data>
+  <data key="d1">grey</data>
+  <data key="d0"> </data>
 </node>
 <node id="2">
-  <data key="d0">grey</data>
-  <data key="d1"> </data>
+  <data key="d1">grey</data>
+  <data key="d0"> </data>
 </node>
 <node id="3">
-  <data key="d0">grey</data>
-  <data key="d1"> </data>
+  <data key="d1">grey</data>
+  <data key="d0"> </data>
 </node>
 <node id="C"/>
 <node id="G"/>

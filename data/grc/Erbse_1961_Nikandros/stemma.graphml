@@ -23,7 +23,6 @@
   <data key="d1">r</data>
 </node>
 <node id="M"/>
-<node id="G"/>
 <edge source="archetyp" target="pi">
   <data key="d2">filiation</data>
   <data key="d3">unknown</data>
@@ -37,10 +36,6 @@
   <data key="d3">unknown</data>
 </edge>
 <edge source="omega" target="hyparchetypalpha">
-  <data key="d2">filiation</data>
-  <data key="d3">unknown</data>
-</edge>
-<edge source="hyparchetypalpha" target="G">
   <data key="d2">filiation</data>
   <data key="d3">unknown</data>
 </edge>
