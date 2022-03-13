@@ -4,9 +4,6 @@ import sys
 import re 
 import csv
 import codecs
-from attr import attr 
-from lxml import etree as et 
-import networkx as nx
 
 from bcolors import bcolors
 
